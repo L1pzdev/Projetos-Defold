@@ -1,0 +1,36 @@
+function init(self)
+	self.score = 0
+	self.board = {}
+	self.piece_x = 5
+	self.piece_y = 15
+	self.timer = 0
+
+	for y = 1,15 do
+		self.board[y] = {}
+		for x = 1,10 do
+			self.board[y][x] = 0
+		end
+	end
+end
+
+function update(self, dt)
+	self.timer = self.timer + dt
+	if self.timer > 1 then
+		if self.piece_y > 1 then
+			self.piece_y = self.piece_y - 1
+		else
+			self.board[self.piece_y][self.piece_x] = 1
+			self.piece_x = 5
+			self.piece_y = 15
+		end
+	self.timer = 0
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("left") and action.pressed and self.piece_x > 1 then
+		self.piece_x = self.piece_x - 1
+	elseif action_id == hash("right") and action.pressed and self.piece_x < 10 then
+		self.piece_x = self.piece_x + 1
+	end
+end
